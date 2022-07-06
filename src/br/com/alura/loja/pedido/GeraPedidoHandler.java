@@ -3,6 +3,7 @@ package br.com.alura.loja.pedido;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import br.com.alura.loja.orcamento.Item;
 import br.com.alura.loja.orcamento.Orcamento;
 import br.com.alura.loja.pedido.acoes.AcaoAposGerarPedido;
 
@@ -16,7 +17,8 @@ public class GeraPedidoHandler {
 	}
 
 	public void executar(GeraPedido geraPedido) {
-		Orcamento orcamento = new Orcamento(geraPedido.getValorOrcamento(), geraPedido.getQuantidadeItens());
+		Orcamento orcamento = new Orcamento();
+		orcamento.adicionaItem(new Item(geraPedido.getValorOrcamento()));
 		Pedido pedido = new Pedido(geraPedido.getCliente(), LocalDateTime.now(), orcamento);
 
 		this.acoesAposGerarPedido.forEach(a -> a.executarAcao(pedido));
